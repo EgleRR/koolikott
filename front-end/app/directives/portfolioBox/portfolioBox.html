@@ -1,18 +1,16 @@
-<md-card class="card-sm" id="portfolio-card-{{portfolio.id}}"
+<md-card class="card-sm md-whiteframe-2dp" id="portfolio-card-{{portfolio.id}}"
          data-ng-click="navigateTo(portfolio, $event)">
-  <div data-ng-if="isAuthenticated()" data-dop-favorite data-learning-object="portfolio"></div>
+  <div data-ng-if="isAuthenticated()" class="card__favorite" data-dop-favorite data-learning-object="portfolio" layout-align="start start"></div>
   <div class="corner"></div>
   <!-- noimage -->
-  <a data-ng-href="{{'/portfolio?id=' + portfolio.id}}" data-ng-if="!portfolio.picture" class="card-cover portfolio">
-     <div class="pattern">
-       <div class="sheet up-left"></div>
-       <div class="sheet low-right"></div>
-       <div class="sheet low-left"></div>
-     </div>
-    <md-icon class="icon-kind">book</md-icon>
+  <a data-ng-href="{{'/portfolio?id=' + portfolio.id}}" data-ng-if="!portfolio.picture" class="card-cover portfolio"
+     layout="row" layout-align="center center">
+    <div>
+      <md-icon class="icon-kind">book</md-icon>
+    </div>
 
     <div class="card-hover portfolio" layout="row">
-      <div data-ng-if="isAuthenticated()" data-dop-favorite data-learning-object="portfolio"></div>
+      <div data-ng-if="isAuthenticated()" data-dop-favorite data-learning-object="portfolio" layout-align="start start"></div>
       <md-icon class="icon-kind">book</md-icon>
     </div>
   </a>
