@@ -45,7 +45,6 @@ public class PictureService {
 
     private static final Object lock = new Object();
 
-
     public Picture getByName(String name) {
         return pictureDAO.findByName(name);
     }

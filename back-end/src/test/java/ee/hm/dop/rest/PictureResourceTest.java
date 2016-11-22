@@ -177,9 +177,7 @@ public class PictureResourceTest extends ResourceIntegrationTestBase {
         login("39011220013");
         File f = DOPFileUtils.getFile(TEST_IMAGE_NAME);
 
-        final StreamDataBodyPart filePart = new StreamDataBodyPart("picture", new ByteArrayInputStream(Base64.getEncoder().encode(Files.readAllBytes(f.toPath()))));
-
-
+        final FileDataBodyPart filePart = new FileDataBodyPart("picture", DOPFileUtils.getFile("bookCover.jpg"));
         @SuppressWarnings("resource")
         FormDataMultiPart formDataMultiPart = (FormDataMultiPart) new FormDataMultiPart().bodyPart(filePart);
 

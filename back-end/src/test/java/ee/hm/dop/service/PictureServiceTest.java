@@ -55,7 +55,6 @@ public class PictureServiceTest {
         assertArrayEquals(picture.getData(), createdPicture.getData());
     }
 
-
     @Test
     public void createWhenHashMatches() {
         Picture existingPicture = new OriginalPicture();
