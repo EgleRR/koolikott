@@ -1,8 +1,8 @@
 'use strict'
 
 angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
-    'translationService', 'iconService', 'embedService', 'serverCallService', 'dialogService', 'storageService', '$rootScope', '$sce',
-    function (translationService, iconService, embedService, serverCallService, dialogService, storageService, $rootScope, $sce) {
+    'translationService', 'iconService', 'embedService', 'serverCallService', 'dialogService', 'storageService', '$rootScope', '$sce', 'materialService', '$route',
+    function (translationService, iconService, embedService, serverCallService, dialogService, storageService, $rootScope, $sce, materialService, $route) {
         return {
             scope: {
                 material: '=',
@@ -38,6 +38,10 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     $scope.isEditPortfolioPage = $rootScope.isEditPortfolioPage;
                     $scope.isEditPortfolioMode = $rootScope.isEditPortfolioMode;
 
+                    if(!$scope.material){
+                        getMaterial(getMaterialSuccess, getMaterialFail);
+                    }
+
                     if ($scope.material) {
                         $scope.material.source = getSource($scope.material);
                         $scope.materialType = getType();
@@ -46,6 +50,27 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                         getSourceType();
                         getContentType();
                     }
+                }
+
+                function getMaterial(success, fail) {
+                    materialService.getMaterialById($route.current.params.id)
+                        .then(success, fail);
+                }
+
+                function getMaterialSuccess(material) {
+                    if (isEmpty(material)) {
+                        log('Could not load material, cannot embed.');
+                    } else {
+                        $scope.material = material;
+                        canPlayAudioFormat();
+                        canPlayVideoFormat();
+                        getSourceType();
+                        getContentType();
+                    }
+                }
+
+                function getMaterialFail() {
+                    log('Getting material failed, cannot embed.');
                 }
 
                 $scope.$watch(function () {
