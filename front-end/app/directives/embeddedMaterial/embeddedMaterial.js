@@ -186,6 +186,10 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                 }
 
                 function getSourceType() {
+                    if($scope.material && $scope.material.uploadedFile){
+                        $scope.ebookLink = "/utils/bibi/bib/i/?book=" + $scope.material.uploadedFile.id + "/" + $scope.material.uploadedFile.name;
+                    }
+
                     if (isYoutubeVideo($scope.material.source)) {
                         $scope.sourceType = 'YOUTUBE';
                     } else if (isSlideshareLink($scope.material.source)) {
@@ -203,7 +207,6 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                             return;
                         }
                         $scope.sourceType = 'EBOOK';
-                        $scope.ebookLink = "/utils/bibi/bib/i/?book=" + $scope.material.uploadedFile.id + "/" + $scope.material.uploadedFile.name;
                     } else if (isPDFLink($scope.material.source)) {
                         $scope.material.PDFLink = "/utils/pdfjs/web/viewer.html?file=" + $scope.material.source;
                         $scope.sourceType = 'PDF';
