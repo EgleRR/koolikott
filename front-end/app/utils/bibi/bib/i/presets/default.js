@@ -11,18 +11,21 @@ Bibi.Preset = {
 
 "bookshelf"                  : "/rest/uploadedFile/", // relative path from bib/i/index.html (if the origin is included in "trustworthy-origins", URI begins with "http://" or "https://" for COR-allowed server is OK).
 
-"reader-view-mode"           : "vertical", // "paged" or "vertical" or "horizontal" ("paged" is for flipping, "vertical" and "horizontal" are for scrolling)
-
+"reader-view-mode"           : "paged", // "paged" or "vertical" or "horizontal" ("paged" is for flipping, "vertical" and "horizontal" are for scrolling)
 "fix-reader-view-mode"       : "no", // "yes" or "no" or "desktop" or "mobile"
+"single-page-always"         : "no", // "yes" or "no" or "desktop" or "mobile"
+
 "autostart"                  : "yes", // "yes" or "no" or "desktop" or "mobile"
 "start-in-new-window"        : "mobile", // "yes" or "no" or "desktop" or "mobile"
+
+"use-nombre"                 : "yes", // "yes" or "no" or "desktop" or "mobile"
 "use-slider"                 : "yes", // "yes" or "no" or "desktop" or "mobile"
 "use-arrows"                 : "yes", // "yes" or "no" or "desktop" or "mobile"
 "use-keys"                   : "desktop", // "yes" or "no" or "desktop" or "mobile"
 "use-swipe"                  : "yes", // "yes" or "no" or "desktop" or "mobile"
 "use-cookie"                 : "yes", // "yes" or "no" or "desktop" or "mobile"
 
-"cookie-expires"             : 60 * 60 * 24 * 3, // seconds (60 * 60 * 24 * 3 = 3days)
+"cookie-expires"             : 1000 * 60 * 60 * 24 * 3, // milli-seconds (ex. 1000ms * 60s * 60m * 24h * 3d = 3days)
 
 "ui-font-family"             : "", // CSS font-family value as "'Helvetica', sans-serif" or ""
 
@@ -53,12 +56,13 @@ Bibi.Preset = {
 "extensions": [
     { "name": "Unzipper", "src": "extensions/unzipper/unzipper.js" }, // if the browser is Internet Explorer, this is always inactive
     { "name": "Analytics", "src" : "extensions/analytics/analytics.js", "tracking-id": "" }, // "tracking-id": Your own Google Analytics tracking id, as "UA-********-*"
+    { "name": "FontSize", "src": "extensions/fontsize/fontsize.js", "base": "auto", "scale-per-step": 1.25 }, // "base": "auto" or pixel-number (if you want to change the default font-size based on the size used most frequently in each HTML)
     { "name": "Share", "src" : "extensions/share/share.js" },
     //{ "name": "EPUBCFI", "src": "extensions/epubcfi/epubcfi.js" },
     //{ "name": "OverReflow", "src": "extensions/overreflow/overreflow.js" },
     //{ "name": "JaTEx", "src": "extensions/jatex/jatex.js" },
     // ------------------------------------------------------------------------------------------
-    { "name": "Bibi", "4U" : "w0" } // (*'-'*)
+    { "name": "Bibi", "4U" : "w/0" } // (*'-'*)
 ],
 
 // =================================================================================================
