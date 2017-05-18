@@ -34,11 +34,11 @@
 
     <div data-ng-show="sourceType === 'VIDEO' && canPlayVideo"
          class="embed-responsive-container embed-video">
-      <video controls="true" width="100%">
-        <source src="{{material.source}}" type="video/webm">
-        <source src="{{material.source}}" type="video/mp4">
-        <source src="{{material.source}}" type="video/ogg">
-      </video>
+      <videogular vg-theme="videoTheme">
+        <vg-media vg-src="material.videoSource"
+                  vg-native-controls="true">
+        </vg-media>
+      </videogular>
     </div>
 
     <div data-ng-if="sourceType === 'VIDEO' && !canPlayVideo"

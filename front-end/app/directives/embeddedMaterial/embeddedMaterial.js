@@ -37,6 +37,7 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     $scope.sourceType = "";
                     $scope.isEditPortfolioPage = $rootScope.isEditPortfolioPage;
                     $scope.isEditPortfolioMode = $rootScope.isEditPortfolioMode;
+                    $scope.videoTheme = "http://www.videogular.com/styles/themes/default/latest/videogular.css";
 
                     if(!$scope.material){
                         getMaterial(getMaterialSuccess, getMaterialFail);
@@ -195,6 +196,11 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     } else if (isSlideshareLink($scope.material.source)) {
                         $scope.sourceType = 'SLIDESHARE';
                     } else if (isVideoLink($scope.material.source)) {
+                        $scope.material.videoSource = [
+                            {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/mp4"},
+                            {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/webm"},
+                            {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/ogg"},
+                        ];
                         $scope.sourceType = 'VIDEO';
                     } else if (isAudioLink($scope.material.source)) {
                         $scope.sourceType = 'AUDIO';

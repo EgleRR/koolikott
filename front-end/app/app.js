@@ -16,7 +16,8 @@ let app = angular.module('koolikottApp', [
     '720kb.socialshare',
     'ngMessages',
     'angular-tour',
-    'angularScreenfull'
+    'angularScreenfull',
+    'com.2fdevs.videogular'
 ]);
 
 let provideProvider = null;
