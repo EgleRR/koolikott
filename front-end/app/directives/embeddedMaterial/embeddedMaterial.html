@@ -52,7 +52,7 @@
 
     <a class="embed-link" href="{{material.source}}" ng-if="sourceType === 'PICTURE'" target="_blank"
        ng-class="{'embed-image-padded': isEditPortfolioMode || $root.isViewPortforlioPage}">
-      <img src="{{material.source}}"/>
+      <img ng-src="{{material.source}}"/>
     </a>
 
     <div class="embed-responsive-container embed-audio"
