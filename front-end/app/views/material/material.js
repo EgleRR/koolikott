@@ -25,8 +25,10 @@ angular.module('koolikottApp')
                 'CCBYNCND': ['by', 'nc', 'nd']
             };
 
-            if (storageService.getMaterial() && storageService.getMaterial().type !== ".ReducedMaterial") {
-                $scope.material = storageService.getMaterial();
+            let material_storage = storageService.getMaterial();
+
+            if (material_storage && material_storage.type !== ".ReducedMaterial") {
+                $scope.material = material_storage;
 
                 if ($rootScope.isEditPortfolioMode || authenticatedUserService.isAuthenticated()) {
                     $rootScope.selectedSingleMaterial = $scope.material;

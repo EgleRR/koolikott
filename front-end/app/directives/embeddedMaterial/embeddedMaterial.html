@@ -65,15 +65,15 @@
       </videogular>
     </div>
 
-    <div data-ng-if="sourceType === 'SLIDESHARE'" class="embed-responsive embed-responsive-4by3" ng-init="init()">
+    <div data-ng-if="sourceType === 'SLIDESHARE'" class="embed-responsive embed-responsive-4by3">
       <div class="embed-responsive-container">
-        <div data-dop-slideshare source="material.source" class="embed-responsive-item"></div>
+        <div data-dop-slideshare data-source="material.source" class="embed-responsive-item"></div>
       </div>
     </div>
 
     <div data-ng-if="sourceType === 'EBOOK'"
          class="embed-responsive-container ebook-container" ng-init="init()">
-      <iframe ng-src="{{ebookLink}}" width="100%" height="500px"></iframe>
+      <iframe data-ng-src="{{ebookLink}}" width="100%" height="500px"></iframe>
     </div>
 
     <div data-ng-if="sourceType === 'PDF'"

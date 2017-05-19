@@ -43,30 +43,32 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     $scope.isEditPortfolioMode = $rootScope.isEditPortfolioMode;
                     $scope.videoTheme = "http://www.videogular.com/styles/themes/default/latest/videogular.css";
 
-                    if(!$scope.material){
-                        getMaterial(getMaterialSuccess, getMaterialFail);
-                    }
-
                     if ($scope.material) {
                         $scope.material.source = getSource($scope.material);
                         $scope.materialType = getType();
                         getSourceType();
                         getContentType();
                     }
+
+                    // mingil juhul ei ole materjali, siis laeme materjali uuesti
+                    if(!$scope.material){
+                        let materialVar = getMaterial(getMaterialSuccess, getMaterialFail);
+                    }
+
                 }
 
                 function getMaterial(success, fail) {
-                    materialService.getMaterialById($route.current.params.id)
+                    return materialService.getMaterialById($route.current.params.id)
                         .then(success, fail);
                 }
 
                 function getMaterialSuccess(material) {
-                    if (isEmpty(material)) {
-                        log('Could not load material, cannot embed.');
-                    } else {
+                    if (material && material.length) {
                         $scope.material = material;
                         getSourceType();
                         getContentType();
+                    } else {
+                        log('Could not load material, cannot embed.');
                     }
                 }
 
@@ -105,7 +107,7 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     var filename = response()['content-disposition'].match(/filename="(.+)"/)[1];
                     $scope.sourceType = matchType(filename);
                     if ($scope.sourceType !== 'LINK') {
-                        if ($scope.sourceType == 'PDF')$scope.material.PDFLink = "/utils/pdfjs/web/viewer.html?file=" + encodeURIComponent($scope.proxyUrl);
+                        if ($scope.sourceType == 'PDF') $scope.material.PDFLink = "/utils/pdfjs/web/viewer.html?file=" + encodeURIComponent($scope.proxyUrl);
                     }
                 }
 
@@ -164,7 +166,7 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     return $scope.isEditPortfolioMode || !$scope.sourceType || $scope.sourceType === 'LINK';
                 };
 
-                $scope.$on('material:saved', function() {
+                $scope.$on('material:saved', function () {
                     init();
                 });
 
@@ -187,11 +189,11 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                 }
 
                 function getSourceType() {
-                    if($scope.material && $scope.material.uploadedFile){
+                    if ($scope.material && $scope.material.uploadedFile) {
                         $scope.ebookLink = "/utils/bibi/bib/i/?book=" + $scope.material.uploadedFile.id + "/" + $scope.material.uploadedFile.name;
                     }
 
-                    if($scope.material){
+                    if ($scope.material) {
                         $scope.material.PDFLink = $sce.trustAsResourceUrl("/utils/pdfjs/web/viewer.html?file=" + $scope.material.source);
                     }
 
@@ -200,7 +202,7 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     } else if (isSlideshareLink($scope.material.source)) {
                         $scope.sourceType = 'SLIDESHARE';
                     } else if (isVideoLink($scope.material.source)) {
-                        if($scope.material.source) {
+                        if ($scope.material.source) {
                             $scope.material.videoSource = [
                                 {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/ogv"},
                                 {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/mp4"},
@@ -210,7 +212,7 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                             $scope.sourceType = 'VIDEO';
                         }
                     } else if (isAudioLink($scope.material.source)) {
-                        if($scope.material.source){
+                        if ($scope.material.source) {
                             $scope.material.audioSource = [
                                 {src: $sce.trustAsResourceUrl($scope.material.source), type: "audio/ogg"},
                                 {src: $sce.trustAsResourceUrl($scope.material.source), type: "audio/mp3"},

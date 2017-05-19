@@ -58,6 +58,8 @@ public class MaterialService extends BaseService implements LearningObjectHandle
     private static final String DEFAULT_PROTOCOL = "http://";
     private final String PDF_EXTENSION = ".pdf\"";
     private final String PDF_MIME_TYPE = "application/pdf";
+    private final String JSON_MIME_TYPE = "application/json";
+    private final String SLIDESHARE_URL = "www.slideshare.net";
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -722,6 +724,9 @@ public class MaterialService extends BaseService implements LearningObjectHandle
             contentDisposition = format("Inline; filename=\"%s\"", fileName);
             return Response.ok(get.getResponseBody(), PDF_MIME_TYPE).header("Content-Disposition",
                     contentDisposition).build();
+        }
+        if(get.getRequestHeaders()[1].getValue().equals(SLIDESHARE_URL)){
+            return Response.ok(get.getResponseBodyAsString(), JSON_MIME_TYPE).build();
         }
 
         return Response.noContent().build();
