@@ -65,7 +65,7 @@
       </videogular>
     </div>
 
-    <div data-ng-if="sourceType === 'SLIDESHARE'" class="embed-responsive embed-responsive-4by3">
+    <div data-ng-if="sourceType === 'SLIDESHARE'" class="embed-responsive embed-responsive-4by3" ng-init="init()">
       <div class="embed-responsive-container">
         <div data-dop-slideshare data-source="material.source" class="embed-responsive-item"></div>
       </div>
