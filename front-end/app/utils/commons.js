@@ -473,7 +473,7 @@ function isSlideshareLink(url) {
 
 function isVideoLink(url) {
     var extension = url.split('.').pop().toLowerCase();
-    return extension == "mp4" || extension == "ogg" || extension == "webm";
+    return extension == "mp4" || extension == "ogv" || extension == "webm";
 }
 
 function isAudioLink(url) {

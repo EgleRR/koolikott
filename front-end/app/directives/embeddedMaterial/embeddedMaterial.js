@@ -29,6 +29,10 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     ctrl.toggleFullscreen();
                 };
 
+                $scope.init = function () {
+                    init();
+                };
+
                 function init() {
                     $scope.canPlayVideo = false;
                     $scope.canPlayAudio = false;
@@ -46,8 +50,6 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     if ($scope.material) {
                         $scope.material.source = getSource($scope.material);
                         $scope.materialType = getType();
-                        canPlayAudioFormat();
-                        canPlayVideoFormat();
                         getSourceType();
                         getContentType();
                     }
@@ -63,8 +65,6 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                         log('Could not load material, cannot embed.');
                     } else {
                         $scope.material = material;
-                        canPlayAudioFormat();
-                        canPlayVideoFormat();
                         getSourceType();
                         getContentType();
                     }
@@ -90,7 +90,7 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     if (materialSource && (matchType(materialSource) === 'LINK' || !materialSource.startsWith(baseUrl))) {
                         $scope.fallbackType = matchType(materialSource);
                         $scope.proxyUrl = baseUrl + "/rest/material/externalMaterial?url=" + encodeURIComponent($scope.material.source);
-                        serverCallService.makeHead($scope.proxyUrl, {}, probeContentSuccess, probeContentFail);
+                        //serverCallService.makeHead($scope.proxyUrl, {}, probeContentSuccess, probeContentFail);
                     }
                     if (materialSource) {
                         $scope.sourceType = matchType(getSource($scope.material));
@@ -164,24 +164,24 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     return $scope.isEditPortfolioMode || !$scope.sourceType || $scope.sourceType === 'LINK';
                 };
 
+                $scope.$on('material:saved', function() {
+                    init();
+                });
+
                 function canPlayVideoFormat() {
-                    var extension = getSource($scope.material).split('.').pop();
-                    var v = document.createElement('video');
-                    /* ogv is a subtype of ogg therefore if ogg is supported ogv is also */
-                    if (extension == "ogv") {
-                        extension = "ogg"
-                    }
-                    if (v.canPlayType && v.canPlayType('video/' + extension)) {
-                        $scope.videoType = extension;
+                    let extension = getSource($scope.material).split('.').pop();
+                    let v = document.createElement('video');
+                    $scope.videoType = extension;
+                    if (v.canPlayType('video/' + extension)) {
                         $scope.canPlayVideo = true;
                     }
                 }
 
                 function canPlayAudioFormat() {
-                    var extension = getSource($scope.material).split('.').pop();
-                    var v = document.createElement('audio');
-                    if (v.canPlayType && v.canPlayType('audio/' + extension)) {
-                        $scope.audioType = extension;
+                    let extension = getSource($scope.material).split('.').pop();
+                    let v = document.createElement('audio');
+                    $scope.audioType = extension;
+                    if (v.canPlayType('audio/' + extension)) {
                         $scope.canPlayAudio = true;
                     }
                 }
@@ -191,19 +191,35 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                         $scope.ebookLink = "/utils/bibi/bib/i/?book=" + $scope.material.uploadedFile.id + "/" + $scope.material.uploadedFile.name;
                     }
 
+                    if($scope.material){
+                        $scope.material.PDFLink = $sce.trustAsResourceUrl("/utils/pdfjs/web/viewer.html?file=" + $scope.material.source);
+                    }
+
                     if (isYoutubeVideo($scope.material.source)) {
                         $scope.sourceType = 'YOUTUBE';
                     } else if (isSlideshareLink($scope.material.source)) {
                         $scope.sourceType = 'SLIDESHARE';
                     } else if (isVideoLink($scope.material.source)) {
-                        $scope.material.videoSource = [
-                            {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/mp4"},
-                            {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/webm"},
-                            {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/ogg"},
-                        ];
-                        $scope.sourceType = 'VIDEO';
+                        if($scope.material.source) {
+                            $scope.material.videoSource = [
+                                {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/ogv"},
+                                {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/mp4"},
+                                {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/webm"},
+                            ];
+                            canPlayVideoFormat();
+                            $scope.sourceType = 'VIDEO';
+                        }
                     } else if (isAudioLink($scope.material.source)) {
-                        $scope.sourceType = 'AUDIO';
+                        if($scope.material.source){
+                            $scope.material.audioSource = [
+                                {src: $sce.trustAsResourceUrl($scope.material.source), type: "audio/ogg"},
+                                {src: $sce.trustAsResourceUrl($scope.material.source), type: "audio/mp3"},
+                                {src: $sce.trustAsResourceUrl($scope.material.source), type: "video/wav"},
+                            ];
+                            canPlayAudioFormat();
+                            $scope.sourceType = 'AUDIO';
+                        }
+                        $scope.audioSource = $scope.material.source;
                     } else if (isPictureLink($scope.material.source)) {
                         $scope.sourceType = 'PICTURE';
                     } else if (isEbookLink($scope.material.source)) {
@@ -213,9 +229,14 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                             return;
                         }
                         $scope.sourceType = 'EBOOK';
+                        // if($('.ebook-container iframe').length !== 0){
+                        //     $('.ebook-container iframe')[0].src = $scope.ebookLink;
+                        // }
                     } else if (isPDFLink($scope.material.source)) {
-                        $scope.material.PDFLink = "/utils/pdfjs/web/viewer.html?file=" + $scope.material.source;
                         $scope.sourceType = 'PDF';
+                        // if($('.pdf-container iframe').length !== 0){
+                        //     $('.pdf-container iframe')[0].src = $scope.material.PDFLink;
+                        // }
                     } else {
                         embedService.getEmbed(getSource($scope.material), embedCallback);
                     }

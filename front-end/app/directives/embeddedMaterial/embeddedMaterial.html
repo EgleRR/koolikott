@@ -32,8 +32,8 @@
       </div>
     </div>
 
-    <div data-ng-show="sourceType === 'VIDEO' && canPlayVideo"
-         class="embed-responsive-container embed-video">
+      <div data-ng-if="sourceType === 'VIDEO' && canPlayVideo || videoType=='ogv'"
+         class="embed-responsive-container embed-video" ng-init="init()">
       <videogular vg-theme="videoTheme">
         <vg-media vg-src="material.videoSource"
                   vg-native-controls="true">
@@ -41,7 +41,7 @@
       </videogular>
     </div>
 
-    <div data-ng-if="sourceType === 'VIDEO' && !canPlayVideo"
+    <div data-ng-if="sourceType === 'VIDEO' && !canPlayVideo && videoType!=='ogv'"
          class="embed-responsive-container embed-video">
       <md-toolbar class="md-warn md-tall" layout-align="center center">
         <div class="md-toolbar-tools" layout-align="center center">
@@ -56,26 +56,29 @@
     </a>
 
     <div class="embed-responsive-container embed-audio"
-         data-ng-if="sourceType === 'AUDIO' && canPlayAudio">
-      <audio controls="true">
-        <source src="{{material.source}}" type="audio/{{audioType}}">
-      </audio>
+         data-ng-if="sourceType === 'AUDIO' && canPlayAudio || audioType=='ogg'">
+      <videogular vg-theme="videoTheme">
+        <vg-media vg-src="material.audioSource"
+                  vg-native-controls="true"
+                  vg-type="audio">
+        </vg-media>
+      </videogular>
     </div>
 
-    <div data-ng-if="sourceType === 'SLIDESHARE'" class="embed-responsive embed-responsive-4by3">
+    <div data-ng-if="sourceType === 'SLIDESHARE'" class="embed-responsive embed-responsive-4by3" ng-init="init()">
       <div class="embed-responsive-container">
         <div data-dop-slideshare source="material.source" class="embed-responsive-item"></div>
       </div>
     </div>
 
     <div data-ng-if="sourceType === 'EBOOK'"
-         class="embed-responsive-container">
-      <iframe src="{{ebookLink}}" width="100%" height="500px"></iframe>
+         class="embed-responsive-container ebook-container" ng-init="init()">
+      <iframe ng-src="{{ebookLink}}" width="100%" height="500px"></iframe>
     </div>
 
     <div data-ng-if="sourceType === 'PDF'"
-         class="embed-responsive-container">
-      <iframe src="{{material.PDFLink}}" width="100%" height="500px"></iframe>
+         class="embed-responsive-container pdf-container" ng-init="init()">
+      <iframe ng-src="{{material.PDFLink}}" width="100%" height="500px"></iframe>
     </div>
 
     <!--Embed iframe-->
@@ -96,7 +99,7 @@
       <!--Link as backup - if iframe is internally not working-->
       <a href="{{material.source}}" class="wrapped regular-link md-primary" flex-xs="70" flex-sm="70"
          target="_blank" data-ng-if="((!sourceType || (sourceType === 'VIDEO' && !canPlayVideo)
-                    || (sourceType === 'AUDIO' && !canPlayAudio)) || sourceType === 'LINK') && !embeddable">
+                    || (sourceType === 'AUDIO' && !canPlayAudio)) || sourceType === 'LINK') && !embeddable && (videoType!=='ogv' && audioType!=='ogg')">
         <span class="item-link" data-ng-bind="material.source"></span>
       </a>
 

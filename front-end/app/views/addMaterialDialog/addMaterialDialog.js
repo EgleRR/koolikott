@@ -810,6 +810,7 @@ angular.module('koolikottApp').controller('addMaterialDialogController', [
 
         function saveMaterialFinally() {
             $scope.isSaving = false;
+            $rootScope.$broadcast('material:saved');
         }
 
         function setResourceTypes(data) {
