@@ -90,7 +90,7 @@ angular.module('koolikottApp').directive('dopEmbeddedMaterial', [
                     if (materialSource && (matchType(materialSource) === 'LINK' || !materialSource.startsWith(baseUrl))) {
                         $scope.fallbackType = matchType(materialSource);
                         $scope.proxyUrl = baseUrl + "/rest/material/externalMaterial?url=" + encodeURIComponent($scope.material.source);
-                        //serverCallService.makeHead($scope.proxyUrl, {}, probeContentSuccess, probeContentFail);
+                        serverCallService.makeHead($scope.proxyUrl, {}, probeContentSuccess, probeContentFail);
                     }
                     if (materialSource) {
                         $scope.sourceType = matchType(getSource($scope.material));
