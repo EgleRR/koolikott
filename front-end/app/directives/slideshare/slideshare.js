@@ -22,9 +22,8 @@ angular.module('koolikottApp')
                         format: "jsonp",
                         callback: "JSON_CALLBACK"
                     };
-                    $scope.proxiedUrl = "https://localhost/rest/material/externalMaterial?url=" + encodeURIComponent("https://www.slideshare.net/api/oembed/2?url=" + $scope.source + "&format=jsonp");
-                    serverCallService.makeGet($scope.proxiedUrl, [], getSlideshareDataSuccess, getSlideshareDataFail);
-                    console.log("Hello");
+                    $scope.proxiedUrl = "https://localhost/rest/material/externalMaterial?url=" + encodeURIComponent("https://www.slideshare.net/api/oembed/2?url=" + $scope.source + "&format=jsonp&callback=JSON_CALLBACK");
+                    serverCallService.makeJsonp($scope.proxiedUrl, [], getSlideshareDataSuccess, getSlideshareDataFail);
                 }
 
                 function getSlideshareDataSuccess(data) {
