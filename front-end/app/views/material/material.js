@@ -126,7 +126,7 @@ angular.module('koolikottApp')
 
             function processMaterial() {
                 if ($scope.material) {
-                    if ($scope.sourceType == "EBOOK") {
+                    if ($scope.sourceType == "EBOOK" && $scope.material && $scope.material.uploadedFile) {
                         $scope.ebookLink = "/libs/bibi/bib/i/?book=" +
                             $scope.material.uploadedFile.id + "/" +
                             $scope.material.uploadedFile.name;
