@@ -725,7 +725,7 @@ public class MaterialService extends BaseService implements LearningObjectHandle
             return Response.ok(get.getResponseBody(), PDF_MIME_TYPE).header("Content-Disposition",
                     contentDisposition).build();
         }
-        if(get.getRequestHeaders()[1].getValue().equals(SLIDESHARE_URL)){
+        if(get.getRequestHeaders().length >= 2 && get.getRequestHeaders()[1].getValue().equals(SLIDESHARE_URL)){
             return Response.ok(get.getResponseBodyAsString(), JSON_MIME_TYPE).build();
         }
 
