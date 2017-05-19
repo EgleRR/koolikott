@@ -113,12 +113,10 @@ public class LoginService {
         authenticatedUser.setUser(user);
 
         //TODO: this should run in a separate thread
-//        Person person = ehisSOAPService.getPersonInformation(user.getIdCode());
-//        if (person != null) {
-//            authenticatedUser.setPerson(person);
-//        }
-        Person person = new Person();
-        person.setId(1L);
+        Person person = ehisSOAPService.getPersonInformation(user.getIdCode());
+        if (person != null) {
+            authenticatedUser.setPerson(person);
+        }
         authenticatedUser.setPerson(person);
 
         return createAuthenticatedUser(authenticatedUser);
