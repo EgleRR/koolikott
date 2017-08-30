@@ -1,9 +1,9 @@
-'use strict'
+'use strict';
 
 angular.module('koolikottApp')
     .component('dopColumnLayout', {
         bindings: {},
-        templateUrl: 'directives/pageStructure/columnLayout/columnLayout.componenet.html',
+        templateUrl: 'directives/pageStructure/columnLayout/columnLayout.html',
         controller: columnLayoutController
     });
 
