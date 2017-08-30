@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('koolikottApp')
     .component('dopPickMaterial', {
@@ -25,7 +25,7 @@ function dopPickMaterialController($rootScope, authenticatedUserService) {
 
         if ($rootScope.selectedMaterials) {
             let index = $rootScope.selectedMaterials.indexOf(vm.learningObject);
-            if (index == -1) {
+            if (index === -1) {
                 $rootScope.selectedMaterials.push(vm.learningObject);
                 vm.learningObject.selected = true;
             } else {
