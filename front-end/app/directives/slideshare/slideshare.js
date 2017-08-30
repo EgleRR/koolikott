@@ -2,9 +2,7 @@
 
 angular.module('koolikottApp')
 .directive('dopSlideshare',
-[
-    'serverCallService',
-    function(serverCallService) {
+    function () {
         return {
             scope: {
                 source: '=',
@@ -45,4 +43,4 @@ angular.module('koolikottApp')
             }]
         };
     }
-]);
+);

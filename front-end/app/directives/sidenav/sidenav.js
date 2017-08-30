@@ -32,7 +32,7 @@ angular.module('koolikottApp')
                 $scope.$watch(function () {
                     return $location.url();
                 }, function () {
-                    $rootScope.isViewPortfolioAndEdit = $location.url().indexOf('/portfolio') != -1 || $location.url().indexOf('/search') != -1;
+                    $rootScope.isViewPortfolioAndEdit = $location.url().indexOf('/portfolio') !== -1 || $location.url().indexOf('/search') !== -1;
                 }, true);
 
                 $scope.$watch(function () {

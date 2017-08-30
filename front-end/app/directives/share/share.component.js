@@ -10,9 +10,9 @@ angular.module('koolikottApp')
     controller: dopShareController
 });
 
-dopShareController.$inject = ['$scope', '$rootScope', '$location', '$window', 'translationService', '$translate', 'authenticatedUserService', '$mdDialog', 'serverCallService', 'toastService', 'Socialshare', 'FB_APP_ID', 'GOOGLE_SHARE_CLIENT_ID', '$timeout'];
+dopShareController.$inject = ['$rootScope', '$location', '$translate', 'authenticatedUserService', '$mdDialog', 'Socialshare', 'FB_APP_ID', 'GOOGLE_SHARE_CLIENT_ID', '$timeout'];
 
-function dopShareController($scope, $rootScope, $location, $window, translationService, $translate, authenticatedUserService, $mdDialog, serverCallService, toastService, Socialshare, FB_APP_ID, GOOGLE_SHARE_CLIENT_ID, $timeout) {
+function dopShareController($rootScope, $location, $translate, authenticatedUserService, $mdDialog, Socialshare, FB_APP_ID, GOOGLE_SHARE_CLIENT_ID, $timeout) {
     let vm = this;
 
     vm.$onInit = () => {

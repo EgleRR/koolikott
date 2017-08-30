@@ -55,7 +55,7 @@ angular.module('koolikottApp').directive('dopTaxonSelector', function () {
 
                 ctrl.getTopics = function () {
                     if (!ctrl.taxonPath) return;
-                    var path = ctrl.taxonPath;
+                    let path = ctrl.taxonPath;
 
                     if (path.subject && path.subject.topics && path.subject.topics.length > 0) return path.subject.topics;
                     if (path.domain && path.domain.topics && path.domain.topics.length > 0) return path.domain.topics;
@@ -118,7 +118,7 @@ angular.module('koolikottApp').directive('dopTaxonSelector', function () {
                 }
 
                 function buildDomainSubjects(educationalContexts) {
-                    for (var i = 0; i < educationalContexts.length; i++) {
+                    for (let i = 0; i < educationalContexts.length; i++) {
                         if (educationalContexts[i].name === 'BASICEDUCATION') {
                             EDUCATIONAL_CONTEXTS.basicEducationDomainSubjects = getDomainsAndSubjects(educationalContexts[i]);
                         } else if (educationalContexts[i].name === 'SECONDARYEDUCATION') {
@@ -128,16 +128,16 @@ angular.module('koolikottApp').directive('dopTaxonSelector', function () {
                 }
 
                 function getDomainsAndSubjects(educationalContext) {
-                    var results = [];
+                    let results = [];
                     //sort Domains alphabetically
-                    var domains = sortTaxonAlphabetically("DOMAIN_", educationalContext.domains);
+                    let domains = sortTaxonAlphabetically("DOMAIN_", educationalContext.domains);
 
                     // for every Domain add it to the list and its children.
-                    for (var j = 0; j < domains.length; j++) {
-                        var domain = domains[j];
+                    for (let j = 0; j < domains.length; j++) {
+                        let domain = domains[j];
                         results.push(domain);
                         //Sort subjects
-                        var subjects = sortTaxonAlphabetically("SUBJECT_", domain.subjects);
+                        let subjects = sortTaxonAlphabetically("SUBJECT_", domain.subjects);
 
                         // Merge the second array into the first one
                         Array.prototype.push.apply(results, subjects);

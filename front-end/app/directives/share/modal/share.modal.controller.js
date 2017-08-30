@@ -43,7 +43,7 @@ angular.module('koolikottApp')
 
         vm.back = () => {
             $mdDialog.cancel();
-        }
+        };
 
         vm.success = () => {
             locals.setShareParams(locals.item);

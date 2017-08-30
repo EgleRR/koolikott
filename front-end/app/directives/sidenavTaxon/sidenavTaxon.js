@@ -78,15 +78,15 @@ angular.module('koolikottApp')
                 });
 
                 $scope.toggleChildren = function (id) {
-                    if ($scope.materialCount == 0) {
+                    if ($scope.materialCount === 0) {
                         return;
-                    } else if ($scope.opened == null) {
+                    } else if ($scope.opened === null) {
                         searchService.setTaxon([id]);
                         $location.url(searchService.getURL());
                         $scope.opened = true;
-                    } else if ($scope.opened == true) {
+                    } else if ($scope.opened === true) {
                         $scope.opened = false;
-                    } else if ($scope.opened == false) {
+                    } else if ($scope.opened === false) {
                         searchService.setTaxon([id]);
                         $location.url(searchService.getURL());
                         $scope.opened = true;
