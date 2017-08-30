@@ -20,7 +20,7 @@ function log() {
 }
 
 function isDefined(value) {
-    return angular.isDefined(value) && value != null;
+    return angular.isDefined(value) && value !== null;
 }
 
 if (typeof String.prototype.startsWith === 'undefined') {
@@ -31,7 +31,7 @@ if (typeof String.prototype.startsWith === 'undefined') {
 
 if (typeof String.prototype.contains === 'undefined') {
     String.prototype.contains = function (it) {
-        return this.indexOf(it) != -1;
+        return this.indexOf(it) !== -1;
     };
 }
 
@@ -41,14 +41,14 @@ if (!Array.prototype.includes) {
         value: function (searchElement, fromIndex) {
 
             // 1. Let O be ? ToObject(this value).
-            if (this == null) {
+            if (this === null) {
                 throw new TypeError('"this" is null or not defined');
             }
 
-            var o = Object(this);
+            let o = Object(this);
 
             // 2. Let len be ? ToLength(? Get(O, "length")).
-            var len = o.length >>> 0;
+            let len = o.length >>> 0;
 
             // 3. If len is 0, return false.
             if (len === 0) {
@@ -57,14 +57,14 @@ if (!Array.prototype.includes) {
 
             // 4. Let n be ? ToInteger(fromIndex).
             //    (If fromIndex is undefined, this step produces the value 0.)
-            var n = fromIndex | 0;
+            let n = fromIndex | 0;
 
             // 5. If n ≥ 0, then
             //  a. Let k be n.
             // 6. Else n < 0,
             //  a. Let k be len + n.
             //  b. If k < 0, let k be 0.
-            var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+            let k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
             // 7. Repeat, while k < len
             while (k < len) {
@@ -88,22 +88,22 @@ if (!Array.prototype.includes) {
 if (!String.prototype.repeat) {
     String.prototype.repeat = function (count) {
         'use strict';
-        if (this == null) {
+        if (this === null) {
             throw new TypeError('can\'t convert ' + this + ' to object');
         }
-        var str = '' + this;
+        let str = '' + this;
         count = +count;
-        if (count != count) {
+        if (count !== count) {
             count = 0;
         }
         if (count < 0) {
             throw new RangeError('repeat count must be non-negative');
         }
-        if (count == Infinity) {
+        if (count === Infinity) {
             throw new RangeError('repeat count must be less than infinity');
         }
         count = Math.floor(count);
-        if (str.length == 0 || count == 0) {
+        if (str.length === 0 || count === 0) {
             return '';
         }
         // Ensuring count is a 31-bit integer allows us to heavily optimize the
@@ -112,13 +112,13 @@ if (!String.prototype.repeat) {
         if (str.length * count >= 1 << 28) {
             throw new RangeError('repeat count must not overflow maximum string size');
         }
-        var rpt = '';
+        let rpt = '';
         for (; ;) {
-            if ((count & 1) == 1) {
+            if ((count & 1) === 1) {
                 rpt += str;
             }
             count >>>= 1;
-            if (count == 0) {
+            if (count === 0) {
                 break;
             }
             str += str;
@@ -135,7 +135,7 @@ function isEmpty(str) {
         return true;
     }
 
-    if (typeof str != 'string') {
+    if (typeof str !== 'string') {
         return false;
     }
 
@@ -148,7 +148,7 @@ function isEmpty(str) {
  * @returns {Date}
  */
 function stringToDate(dateString) {
-    var date = dateString.split(".");
+    let date = dateString.split(".");
     return new Date(date[2], date[1] - 1, date[0]);
 }
 
@@ -212,7 +212,7 @@ function getUserDefinedLanguageString(values, userLanguage, materialLanguage) {
         return;
     }
 
-    var languageStringValue;
+    let languageStringValue;
 
     if (values.length === 1) {
         languageStringValue = values[0].text;
@@ -238,7 +238,7 @@ function getLanguageString(values, language) {
         return null;
     }
 
-    for (var i = 0; i < values.length; i++) {
+    for (let i = 0; i < values.length; i++) {
         if (values[i].language === language) {
             return values[i].text;
         }
@@ -292,13 +292,13 @@ function formatYear(year) {
 }
 
 function formatDateToDayMonthYear(dateString) {
-    var date = new Date(dateString);
+    let date = new Date(dateString);
     return formatDay(date.getDate()) + "." + formatMonth(date.getMonth() + 1) + "." + date.getFullYear();
 }
 
 function arrayToInitials(array) {
-    var res = "";
-    for (var i = 0; i < array.length; i++) {
+    let res = "";
+    for (let i = 0; i < array.length; i++) {
         res += wordToInitial(array[i]) + " ";
     }
 
@@ -320,9 +320,9 @@ function formatSurnameToInitialsButLast(surname) {
         return;
     }
 
-    var array = surname.split(" ");
-    var last = array.length - 1;
-    var res = "";
+    let array = surname.split(" ");
+    let last = array.length - 1;
+    let res = "";
 
     if (last > 0) {
         res = arrayToInitials(array.slice(0, last)) + " ";
@@ -337,13 +337,13 @@ function isIdCodeValid(idCode) {
         return false;
     }
 
-    var controlCode;
+    let controlCode;
 
-    var firstWeights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
-    var secondWeights = [3, 4, 5, 6, 7, 8, 9, 1, 2, 3];
+    let firstWeights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
+    let secondWeights = [3, 4, 5, 6, 7, 8, 9, 1, 2, 3];
 
-    var firstSum = 0;
-    for (i = 0; i < 10; i++) {
+    let firstSum = 0;
+    for (let i = 0; i < 10; i++) {
         firstSum += idCode.charAt(i) * firstWeights[i];
     }
 
@@ -351,8 +351,8 @@ function isIdCodeValid(idCode) {
         controlCode = firstSum % 11;
     } else {
         // Calculate second sum using second set of weights
-        var secondSum = 0;
-        for (i = 0; i < 10; i++) {
+        let secondSum = 0;
+        for (let i = 0; i < 10; i++) {
             secondSum += idCode.charAt(i) * secondWeights[i];
         }
 
@@ -363,11 +363,11 @@ function isIdCodeValid(idCode) {
         }
     }
 
-    return idCode[10] == controlCode;
+    return idCode[10] === controlCode;
 }
 
 function containsObject(obj, list) {
-    var x;
+    let x;
     for (x in list) {
         if (list.hasOwnProperty(x) && (list[x] === obj || list[x].__proto__ === obj.__proto__)) {
             return true;
@@ -378,7 +378,7 @@ function containsObject(obj, list) {
 }
 
 function createPortfolio(id) {
-    var portfolio = {
+    let portfolio = {
         type: ".Portfolio",
         id: id,
         title: "",
@@ -399,9 +399,9 @@ function sortTags(upVoteForms) {
 }
 
 function containsMaterial(materials, selectedMaterial) {
-    for (var i = 0; i < materials.length; i++) {
-        var material = materials[i];
-        if (material.id == selectedMaterial.id) {
+    for (let i = 0; i < materials.length; i++) {
+        let material = materials[i];
+        if (material.id === selectedMaterial.id) {
             return true;
         }
     }
@@ -452,7 +452,7 @@ Array.prototype.move = function (old_index, new_index) {
         new_index += this.length;
     }
     if (new_index >= this.length) {
-        var k = new_index - this.length;
+        let k = new_index - this.length;
         while ((k--) + 1) {
             this.push(undefined);
         }
@@ -462,41 +462,41 @@ Array.prototype.move = function (old_index, new_index) {
 
 function isYoutubeVideo(url) {
     // regex taken from http://stackoverflow.com/questions/2964678/jquery-youtube-url-validation-with-regex #ULTIMATE YOUTUBE REGEX
-    var youtubeUrlRegex = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    let youtubeUrlRegex = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
     return url && url.match(youtubeUrlRegex);
 }
 
 function isSlideshareLink(url) {
-    var slideshareUrlRegex = /^https?\:\/\/www\.slideshare\.net\/[a-zA-Z0-9\-]+\/[a-zA-Z0-9\-]+$/;
+    let slideshareUrlRegex = /^https?\:\/\/www\.slideshare\.net\/[a-zA-Z0-9\-]+\/[a-zA-Z0-9\-]+$/;
     return url && url.match(slideshareUrlRegex);
 }
 
 function isVideoLink(url) {
-    var extension = url.split('.').pop().toLowerCase();
-    return extension == "mp4" || extension == "ogg" || extension == "webm";
+    let extension = url.split('.').pop().toLowerCase();
+    return extension === "mp4" || extension === "ogg" || extension === "webm";
 }
 
 function isAudioLink(url) {
-    var extension = url.split('.').pop().toLowerCase();
-    return extension == "mp3" || extension == "ogg" || extension == "wav";
+    let extension = url.split('.').pop().toLowerCase();
+    return extension === "mp3" || extension === "ogg" || extension === "wav";
 }
 
 function isPictureLink(url) {
     if (!url) return;
-    var extension = url.split('.').pop().toLowerCase();
-    return extension == "jpg" || extension == "jpeg" || extension == "png" || extension == "gif";
+    let extension = url.split('.').pop().toLowerCase();
+    return extension === "jpg" || extension === "jpeg" || extension === "png" || extension === "gif";
 }
 
 function isEbookLink(url) {
     if (!url) return;
-    var extension = url.split('.').pop().toLowerCase();
-    return extension == "epub";
+    let extension = url.split('.').pop().toLowerCase();
+    return extension === "epub";
 }
 
 function isPDFLink(url) {
     if (!url) return;
-    var extension = url.split('.').pop().toLowerCase();
-    return extension == "pdf";
+    let extension = url.split('.').pop().toLowerCase();
+    return extension === "pdf";
 }
 
 function matchType(type) {
@@ -520,7 +520,7 @@ function matchType(type) {
 }
 
 function isIE() {
-    return (navigator.appName == 'Microsoft Internet Explorer' || !!(navigator.userAgent.match(/Trident/) ||
+    return (navigator.appName === 'Microsoft Internet Explorer' || !!(navigator.userAgent.match(/Trident/) ||
     navigator.userAgent.match(/rv 11/)));
 }
 
@@ -563,8 +563,8 @@ if (typeof localStorage === 'object') {
         localStorage.setItem('localStorage', 1);
         localStorage.removeItem('localStorage');
     } catch (e) {
-        var tmp_storage = {};
-        var p = '__unique__';  // Prefix all keys to avoid matching built-ins
+        let tmp_storage = {};
+        let p = '__unique__';  // Prefix all keys to avoid matching built-ins
         Storage.prototype.setItem = function(k, v){
             tmp_storage[p + k] = v;
         };

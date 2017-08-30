@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('koolikottApp')
     .component('dopToolbarAddMaterials', {
@@ -11,6 +11,12 @@ dopToolbarAddMaterialsController.$inject = ['$rootScope', '$translate', 'authent
 
 function dopToolbarAddMaterialsController($rootScope, $translate, authenticatedUserService, serverCallService, toastService, storageService, materialService, $mdDialog, portfolioService) {
     let vm = this;
+    vm.loadPortfolioChapters = loadPortfolioChapters;
+    vm.portfolioSelectChange = portfolioSelectChange;
+    vm.removeSelection = removeSelection;
+    vm.addMaterialsToChapter = addMaterialsToChapter;
+    vm.getPortfolioSelectLabel = getPortfolioSelectLabel;
+    vm.getChapterSelectLabel = getChapterSelectLabel;
 
     vm.$onInit = () => {
         if ($rootScope.isEditPortfolioMode) {
@@ -23,10 +29,10 @@ function dopToolbarAddMaterialsController($rootScope, $translate, authenticatedU
         } else {
             loadUserPortfolios();
         }
-    }
+    };
 
     function getPortfolioSelectLabel() {
-        if (vm.portfolio != null) {
+        if (vm.portfolio !== null) {
             if (vm.portfolio.title) {
                 return vm.portfolio.title;
             } else if (vm.portfolio === '-1') {
@@ -38,7 +44,7 @@ function dopToolbarAddMaterialsController($rootScope, $translate, authenticatedU
     }
 
     function getChapterSelectLabel() {
-        if (vm.chapter != null) {
+        if (vm.chapter !== null) {
 
             let indexes = vm.chapter.split('_').map((item) => { return parseInt(item) });
 
@@ -104,7 +110,7 @@ function dopToolbarAddMaterialsController($rootScope, $translate, authenticatedU
 
         upgradeMaterials($rootScope.selectedMaterials).then(function(data) {
 
-            if (subchapterIndex == null) {
+            if (subchapterIndex === null) {
                 if (indexes[0] === -1) {
                     tempPortfolio.chapters[chapterIndex] = {
                         title: ''
@@ -228,12 +234,4 @@ function dopToolbarAddMaterialsController($rootScope, $translate, authenticatedU
                 toastService.show('LOADING_PORTFOLIOS_FAIL');
             });
     }
-
-    // Exports
-    vm.loadPortfolioChapters = loadPortfolioChapters;
-    vm.portfolioSelectChange = portfolioSelectChange;
-    vm.removeSelection = removeSelection;
-    vm.addMaterialsToChapter = addMaterialsToChapter;
-    vm.getPortfolioSelectLabel = getPortfolioSelectLabel;
-    vm.getChapterSelectLabel = getChapterSelectLabel;
 }
