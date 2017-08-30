@@ -31,7 +31,7 @@
   <![endif]-->
   <img data-ng-if="!hasAppInitated" id="preloader" class="preloader" src="utils/preloader/ring.gif" alt="Loading...">
 
-  <div data-ng-if="hasAppInitated" layout-fill data-dop-column-layout></div>
+  <data-dop-column-layout data-ng-if="hasAppInitated" layout-fill></data-dop-column-layout>
   <data-dop-main-fab-button></data-dop-main-fab-button>
 
   <!--preloader-->
