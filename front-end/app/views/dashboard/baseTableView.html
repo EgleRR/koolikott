@@ -64,7 +64,7 @@
           <div data-ng-if="isView('/dashboard/deletedMaterials')" data-dop-deleted-material></div>
           <div data-ng-if="isView('/dashboard/improperMaterials')" data-dop-improper-material></div>
           <div data-ng-if="isView('/dashboard/improperPortfolios')" data-dop-improper-portfolio></div>
-          <div data-ng-if="isView('/dashboard/brokenMaterials')" data-dop-broken-material></div>
+          <dop-broken-material data-ng-if="isView('/dashboard/brokenMaterials')"></dop-broken-material>
           <div data-ng-if="isView('/dashboard/changedLearningObjects')" data-dop-changed-learning-object></div>
         </md-card>
       </md-table-container>
