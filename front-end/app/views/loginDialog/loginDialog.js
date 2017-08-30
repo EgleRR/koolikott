@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('koolikottApp')
 .controller('loginDialogController',
@@ -14,7 +14,7 @@ angular.module('koolikottApp')
         $scope.$watch(function() {
             return authenticatedUserService.isAuthenticated()
         }, function(newValue, oldValue) {
-            if (newValue == true) {
+            if (newValue === true) {
                 $mdDialog.hide();
             }
         }, false);

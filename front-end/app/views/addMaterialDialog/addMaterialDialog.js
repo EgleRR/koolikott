@@ -41,7 +41,7 @@ angular.module('koolikottApp').controller('addMaterialDialogController', [
             let materialResourceTypes = $scope.material.resourceTypes;
 
             var isFound = materialResourceTypes.filter(function (mResourceType) {
-                return mResourceType.id == resourceType.id;
+                return mResourceType.id === resourceType.id;
             });
 
             return isFound.length > 0;
@@ -56,7 +56,7 @@ angular.module('koolikottApp').controller('addMaterialDialogController', [
         };
 
         $scope.step.isTabDisabled = function (index) {
-            if (index == 0)
+            if (index === 0)
                 return false;
 
             return !isStepValid(index - 1);
@@ -109,7 +109,7 @@ angular.module('koolikottApp').controller('addMaterialDialogController', [
 
         $scope.getLanguageById = function (id) {
             return $scope.languages.filter(function (language) {
-                return language.id == id;
+                return language.id === id;
             })[0].name;
         };
 
@@ -250,7 +250,7 @@ angular.module('koolikottApp').controller('addMaterialDialogController', [
             return $scope.material.targetGroups && $scope.material.targetGroups.length > 0;
         }
 
-        function isTaxonSet (index) {
+        function isTaxonSet(index) {
             return $scope.material.taxons && $scope.material.taxons[index] && $scope.material.taxons[index].level && $scope.material.taxons[index].level !== ".EducationalContext";
         }
 
@@ -634,8 +634,8 @@ angular.module('koolikottApp').controller('addMaterialDialogController', [
         }
 
         function fileUploadFailed(response) {
-            console.log("File upload failed");
-            if(response.data.cause == "filename too long"){
+            log("File upload failed");
+            if (response.data.cause === "filename too long") {
                 $scope.addMaterialForm.source.$setValidity("filenameTooLong", false);
                 $scope.addMaterialForm.source.$setTouched();
             }
@@ -824,7 +824,7 @@ angular.module('koolikottApp').controller('addMaterialDialogController', [
             var userLanguage = translationService.getLanguage();
 
             preferredLanguage = $scope.languages.filter(function (language) {
-                return language == userLanguage;
+                return language === userLanguage;
             });
         }
 

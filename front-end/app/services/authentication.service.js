@@ -50,8 +50,7 @@ angular.module('koolikottApp')
             } else if (authenticatedUser.firstLogin) {
                 $location.url('/' + authenticatedUser.user.username);
             } else if (isOAuthAuthentication) {
-                var url = localStorage.getItem(LOGIN_ORIGIN);
-                $location.url(url);
+                $location.url(localStorage.getItem(LOGIN_ORIGIN));
             }
 
             enableLogin();

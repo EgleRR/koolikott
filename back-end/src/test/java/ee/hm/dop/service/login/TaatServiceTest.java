@@ -1,31 +1,8 @@
 package ee.hm.dop.service.login;
 
-import static ee.hm.dop.utils.ConfigurationProperties.KEYSTORE_FILENAME;
-import static ee.hm.dop.utils.ConfigurationProperties.KEYSTORE_PASSWORD;
-import static ee.hm.dop.utils.ConfigurationProperties.KEYSTORE_SIGNING_ENTITY_ID;
-import static ee.hm.dop.utils.ConfigurationProperties.KEYSTORE_SIGNING_ENTITY_PASSWORD;
-import static ee.hm.dop.utils.ConfigurationProperties.TAAT_ASSERTION_CONSUMER_SERVICE_INDEX;
-import static ee.hm.dop.utils.ConfigurationProperties.TAAT_CONNECTION_ID;
-import static ee.hm.dop.utils.ConfigurationProperties.TAAT_SSO;
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import javax.servlet.http.HttpServletResponse;
-
 import ee.hm.dop.dao.AuthenticationStateDao;
 import ee.hm.dop.model.AuthenticatedUser;
 import ee.hm.dop.model.AuthenticationState;
-import ee.hm.dop.service.login.LoginService;
-import ee.hm.dop.service.login.TaatService;
 import ee.hm.dop.utils.security.KeyStoreUtils;
 import org.apache.commons.configuration.Configuration;
 import org.easymock.EasyMock;
@@ -47,6 +24,12 @@ import org.opensaml.xml.ConfigurationException;
 import org.opensaml.xml.signature.Signature;
 import org.opensaml.xml.signature.SignatureValidator;
 import org.opensaml.xml.validation.ValidationException;
+
+import javax.servlet.http.HttpServletResponse;
+
+import static ee.hm.dop.utils.ConfigurationProperties.*;
+import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 
 @RunWith(EasyMockRunner.class)
 public class TaatServiceTest {
@@ -198,7 +181,7 @@ public class TaatServiceTest {
      * TaatService.getResponse(), this gets parsed into an XMLObject and casted
      * into a Response. The signature in the response does not really matter as
      * we have a mock of the SignatureValidator.
-     * 
+     *
      * @return SAMLResponse
      */
     private String getSAMLResponse() {

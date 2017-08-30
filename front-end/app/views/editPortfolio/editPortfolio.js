@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('koolikottApp')
     .controller('editPortfolioController',
@@ -108,7 +108,7 @@ angular.module('koolikottApp')
                 function checkAuthorized(portfolio) {
                     var user = authenticatedUserService.getUser();
 
-                    if ((user && user.id == portfolio.creator.id) || authenticatedUserService.isAdmin() || authenticatedUserService.isModerator()) {
+                    if ((user && user.id === portfolio.creator.id) || authenticatedUserService.isAdmin() || authenticatedUserService.isModerator()) {
                         return true
                     }
 

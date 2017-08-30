@@ -24,7 +24,7 @@ angular.module('koolikottApp')
                     $scope.newPortfolio.chapters = portfolio.chapters;
                     $scope.newPortfolio.taxons = [{}];
 
-                    if ($scope.portfolio.id != null) {
+                    if ($scope.portfolio.id !== null) {
                         $scope.isEditPortfolio = true;
                         $scope.isSummaryVisible = true;
 
@@ -170,9 +170,9 @@ angular.module('koolikottApp')
                     $scope.isSaving = false;
                 }
 
-                function isTaxonSet (index) {
+                function isTaxonSet(index) {
                     return $scope.newPortfolio.taxons[index] && $scope.newPortfolio.taxons[index].level && $scope.newPortfolio.taxons[index].level !== ".EducationalContext";
-                };
+                }
 
                 function getMaxPictureSize() {
                     serverCallService.makeGet('/rest/picture/maxSize', {}, getMaxPictureSizeSuccess, getMaxPictureSizeFail);

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('koolikottApp').controller('searchResultController', [
             '$scope', 'serverCallService', 'translationService', '$location', 'searchService', '$rootScope',

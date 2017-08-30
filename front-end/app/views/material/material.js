@@ -60,7 +60,7 @@ angular.module('koolikottApp')
                 }
                 if (materialSource) {
                     $scope.sourceType = matchType(getSource($scope.material));
-                    if ($scope.sourceType == "EBOOK" && isIE()) $scope.material.source += "?archive=true";
+                    if ($scope.sourceType === "EBOOK" && isIE()) $scope.material.source += "?archive=true";
                 }
             }
 
@@ -126,7 +126,7 @@ angular.module('koolikottApp')
 
             function processMaterial() {
                 if ($scope.material) {
-                    if ($scope.sourceType == "EBOOK") {
+                    if ($scope.sourceType === "EBOOK") {
                         $scope.ebookLink = "/libs/bibi/bib/i/?book=" +
                             $scope.material.uploadedFile.id + "/" +
                             $scope.material.uploadedFile.name;
@@ -158,7 +158,7 @@ angular.module('koolikottApp')
 
                 $rootScope.learningObjectBroken = ($scope.material.broken > 0);
                 $rootScope.learningObjectImproper = ($scope.material.improper > 0);
-                $rootScope.learningObjectDeleted = ($scope.material.deleted == true);
+                $rootScope.learningObjectDeleted = ($scope.material.deleted === true);
 
                 if (authenticatedUserService.isAdmin() || authenticatedUserService.isModerator()) {
                     if ($scope.material.improper > 0) {
@@ -240,16 +240,16 @@ angular.module('koolikottApp')
             });
 
             $scope.isAdminButtonsShowing = () => {
-                return ($rootScope.learningObjectDeleted == false
-                    && $rootScope.learningObjectImproper == false
-                    && $rootScope.learningObjectBroken == true)
-                    || ($rootScope.learningObjectDeleted == false
-                    && $rootScope.learningObjectBroken == false
-                    && $rootScope.learningObjectImproper == true)
-                    || ($rootScope.learningObjectDeleted == false
-                    && $rootScope.learningObjectBroken == true
-                    && $rootScope.learningObjectImproper == true)
-                    || ($rootScope.learningObjectDeleted == true);
+                return ($rootScope.learningObjectDeleted === false
+                    && $rootScope.learningObjectImproper === false
+                    && $rootScope.learningObjectBroken === true)
+                    || ($rootScope.learningObjectDeleted === false
+                    && $rootScope.learningObjectBroken === false
+                    && $rootScope.learningObjectImproper === true)
+                    || ($rootScope.learningObjectDeleted === false
+                    && $rootScope.learningObjectBroken === true
+                    && $rootScope.learningObjectImproper === true)
+                    || ($rootScope.learningObjectDeleted === true);
             };
 
             function getTaxonObject() {
@@ -320,7 +320,7 @@ angular.module('koolikottApp')
                 if (!$scope.material) return;
 
                 var resourceTypes = $scope.material.resourceTypes;
-                if (resourceTypes.length == 0) {
+                if (resourceTypes.length === 0) {
                     return 'NONE';
                 }
                 return resourceTypes[resourceTypes.length - 1].name;
