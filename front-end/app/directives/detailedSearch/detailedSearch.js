@@ -1,8 +1,7 @@
 'use strict'
 
-angular.module('koolikottApp').directive('dopDetailedSearch', [
-    '$location', 'searchService', 'translationService', '$filter', 'serverCallService', 'metadataService', 'taxonService', 'storageService',
-    function ($location, searchService, translationService, $filter, serverCallService, metadataService, taxonService, storageService) {
+angular.module('koolikottApp').directive('dopDetailedSearch',
+    function () {
         return {
             scope: {
                 queryIn: '=',
@@ -12,14 +11,17 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                 isVisible: '='
             },
             templateUrl: 'detailedSearch.html',
-            controller: ['$scope', '$rootScope', '$timeout', '$window', function ($scope, $rootScope, $timeout, $window) {
+            controller: ['$location', 'searchService', 'metadataService', 'taxonService',
+                'storageService', '$scope', '$rootScope', '$timeout', function (
+                $location, searchService, metadataService, taxonService,
+                storageService, $scope, $rootScope, $timeout) {
                 $scope.queryIn = $scope.queryIn ? $scope.queryIn : "";
 
-                var BASIC_EDUCATION_ID = 2;
-                var SECONDARY_EDUCATION_ID = 3;
-                var VOCATIONAL_EDUCATION_ID = 4;
-                var initiated = false;
-                var prefilling = false;
+                const BASIC_EDUCATION_ID = 2;
+                const SECONDARY_EDUCATION_ID = 3;
+                const VOCATIONAL_EDUCATION_ID = 4;
+                let initiated = false;
+                let prefilling = false;
 
                 init();
 
@@ -39,7 +41,7 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                     $scope.detailedSearch.targetGroups = searchService.getTargetGroups();
 
                     // Paid
-                    var isPaid = searchService.isPaid();
+                    let isPaid = searchService.isPaid();
                     if (isPaid === true || isPaid === false) {
                         $scope.detailedSearch.paid = !isPaid;
                     } else {
@@ -58,7 +60,7 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                     }
 
                     // Special education
-                    var isSpecialEducation = searchService.isSpecialEducation();
+                    let isSpecialEducation = searchService.isSpecialEducation();
                     if (isSpecialEducation === true || isSpecialEducation === false) {
                         $scope.detailedSearch.specialEducation = isSpecialEducation;
                     } else {
@@ -68,21 +70,21 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                     // Issue date
                     $scope.issueDateFirstYear = 2009;
                     $scope.issueDateLastYear = new Date().getFullYear();
-                    var issuedFrom = searchService.getIssuedFrom();
+                    let issuedFrom = searchService.getIssuedFrom();
                     if (issuedFrom && issuedFrom >= $scope.issueDateFirstYear && issuedFrom <= $scope.issueDateLastYear) {
                         $scope.detailedSearch.issueDate = issuedFrom;
                     }
 
                     // Cross-curricular themes
                     metadataService.loadCrossCurricularThemes(setCrossCurricularThemes);
-                    var crossCurricularTheme = searchService.getCrossCurricularTheme();
+                    let crossCurricularTheme = searchService.getCrossCurricularTheme();
                     if (crossCurricularTheme) {
                         $scope.detailedSearch.crossCurricularTheme = crossCurricularTheme;
                     }
 
                     // Key competences
                     metadataService.loadKeyCompetences(setKeyCompetences);
-                    var keyCompetence = searchService.getKeyCompetence();
+                    let keyCompetence = searchService.getKeyCompetence();
                     if (keyCompetence) {
                         $scope.detailedSearch.keyCompetence = keyCompetence;
                     }
@@ -159,7 +161,7 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                 }
 
                 function addIssueDateToSearch() {
-                    var effectiveIssueDate = $scope.getEffectiveIssueDate();
+                    let effectiveIssueDate = $scope.getEffectiveIssueDate();
                     if (effectiveIssueDate) {
                         searchService.setIssuedFrom(effectiveIssueDate);
                     } else {
@@ -184,7 +186,7 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                 }
 
                 function getTextFieldsAsQuery() {
-                    var query = '';
+                    let query = '';
 
                     if ($scope.detailedSearch.title) {
                         query += 'title:' + addQuotesIfNecessary($scope.detailedSearch.title);
@@ -210,26 +212,26 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                 }
 
                 function createSimpleSearchQuery() {
-                    var textFields = getTextFieldsAsQuery();
-                    var checkboxes = getCheckboxesAsQuery();
-                    var main = $scope.detailedSearch.main ? $scope.detailedSearch.main : "";
+                    let textFields = getTextFieldsAsQuery();
+                    let checkboxes = getCheckboxesAsQuery();
+                    let main = $scope.detailedSearch.main ? $scope.detailedSearch.main : "";
 
                     return (main + ' ' + textFields + ' ' + checkboxes).trim();
                 }
 
                 function parseSimpleSearchQuery(query) {
-                    var titleRegex = /(^|\s)(title:([^\s\"]\S*)|title:\"(.*?)\"|title:)/g;
-                    var descriptionRegex = /(^|\s)(description:([^\s\"]\S*)|description:\"(.*?)\"|description:|summary:([^\s\"]\S*)|summary:\"(.*?)\"|summary:)/g;
-                    var authorRegex = /(^|\s)(author:([^\s\"]\S*)|author:\"(.*?)\"|author:)/g;
-                    var clilRegex = /(^|\s)(LAK|"Lõimitud aine- ja keeleõpe")(?=\s|$)/g;
-                    var specialEducationalNeedRegex = /(^|\s)(HEV|"Hariduslik erivajadus")(?=\s|$)/g;
+                    const titleRegex = /(^|\s)(title:([^\s\"]\S*)|title:\"(.*?)\"|title:)/g;
+                    const descriptionRegex = /(^|\s)(description:([^\s\"]\S*)|description:\"(.*?)\"|description:|summary:([^\s\"]\S*)|summary:\"(.*?)\"|summary:)/g;
+                    const authorRegex = /(^|\s)(author:([^\s\"]\S*)|author:\"(.*?)\"|author:)/g;
+                    const clilRegex = /(^|\s)(LAK|"Lõimitud aine- ja keeleõpe")(?=\s|$)/g;
+                    const specialEducationalNeedRegex = /(^|\s)(HEV|"Hariduslik erivajadus")(?=\s|$)/g;
 
-                    var firstTitle;
-                    var firstDescription;
-                    var firstAuthor;
-                    var main = query;
+                    let firstTitle;
+                    let firstDescription;
+                    let firstAuthor;
+                    let main = query;
 
-                    var title;
+                    let title;
                     while (title = titleRegex.exec(query)) {
                         // Remove token from main query
                         main = main.replace(title[2], '');
@@ -240,7 +242,7 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                         }
                     }
 
-                    var description;
+                    let description;
                     while (description = descriptionRegex.exec(query)) {
                         main = main.replace(description[2], '');
                         if (!firstDescription) {
@@ -248,7 +250,7 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                         }
                     }
 
-                    var author;
+                    let author;
                     while (author = authorRegex.exec(query)) {
                         main = main.replace(author[2], '');
                         if (!firstAuthor) {
@@ -256,7 +258,7 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                         }
                     }
 
-                    var keyword;
+                    let keyword;
                     while (keyword = clilRegex.exec(query)) {
                         main = main.replace(keyword[2], '');
                         $scope.detailedSearch.CLIL = true;
@@ -384,23 +386,23 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                 }
 
                 function clearHiddenFields() {
-                    var educationalContext = $scope.detailedSearch.educationalContext;
+                    let educationalContext = $scope.detailedSearch.educationalContext;
 
                     // Only curriculum literature checkbox
                     if (!educationalContext ||
-                        (educationalContext.id != BASIC_EDUCATION_ID &&
-                        educationalContext.id != SECONDARY_EDUCATION_ID &&
-                        educationalContext.id != VOCATIONAL_EDUCATION_ID)) {
+                        (educationalContext.id !== BASIC_EDUCATION_ID &&
+                        educationalContext.id !== SECONDARY_EDUCATION_ID &&
+                        educationalContext.id !== VOCATIONAL_EDUCATION_ID)) {
                         $scope.detailedSearch.onlyCurriculumLiterature = false;
                     }
 
                     // Special education checkbox
-                    if (!educationalContext || educationalContext.id != BASIC_EDUCATION_ID) {
+                    if (!educationalContext || educationalContext.id !== BASIC_EDUCATION_ID) {
                         $scope.detailedSearch.specialEducation = false;
                     }
 
                     // Cross-curricular themes and key competences
-                    if (!educationalContext || (educationalContext.id != BASIC_EDUCATION_ID && educationalContext.id != SECONDARY_EDUCATION_ID)) {
+                    if (!educationalContext || (educationalContext.id !== BASIC_EDUCATION_ID && educationalContext.id !== SECONDARY_EDUCATION_ID)) {
                         $scope.detailedSearch.crossCurricularTheme = null;
                         $scope.detailedSearch.keyCompetence = null;
                     }
@@ -437,7 +439,7 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
                 };
 
                 $scope.getEffectiveIssueDate = function () {
-                    if ($scope.detailedSearch.issueDate && $scope.detailedSearch.issueDate != $scope.issueDateFirstYear) {
+                    if ($scope.detailedSearch.issueDate && $scope.detailedSearch.issueDate !== $scope.issueDateFirstYear) {
                         return $scope.detailedSearch.issueDate;
                     }
                 };
@@ -478,4 +480,4 @@ angular.module('koolikottApp').directive('dopDetailedSearch', [
             }]
         };
     }
-]);
+);
